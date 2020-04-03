@@ -66,10 +66,11 @@ sh eval_arc_sst5.sh
 ## Citations
 
 If you happen to use our work, please consider citing our paper.
-
+```
 @article{wang2019textnas,
   title={TextNAS: A Neural Architecture Search Space tailored for Text Representation},
   author={Wang, Yujing and Yang, Yaming and Chen, Yiren and Bai, Jing and Zhang, Ce and Su, Guinan and Kou, Xiaoyu and Tong, Yunhai and Yang, Mao and Zhou, Lidong},
   journal={arXiv preprint arXiv:1912.10729},
   year={2019}
 }
+```
