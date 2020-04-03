@@ -47,7 +47,7 @@ git clone https://github.com/microsoft/TextNAS.git
 # search the best architecture
 cd TextNAS
 
-# view more options for search
+# run the default search script
 sh sst_macro_search_multi.sh
 ```
 ### Evaluate the architecture
@@ -60,8 +60,8 @@ git clone https://github.com/microsoft/TextNAS.git
 sh eval_arc_sst2.sh
 
 # evaluate the architecture on sst-5
-```
 sh eval_arc_sst5.sh
+```
 
 ## Citations
 
