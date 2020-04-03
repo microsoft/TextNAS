@@ -1,64 +1,75 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- dotnet
-description: "Add 150 character max description"
-urlFragment: "update-this-to-unique-url-stub"
----
+This is the implementation of the TextNAS algorithm proposed in the paper [TextNAS: A Neural Architecture Search Space tailored for Text Representation](https://arxiv.org/pdf/1912.10729.pdf). TextNAS is a neural architecture search algorithm tailored for text representation, more specifically, TextNAS is based on a novel search space consists of operators widely adopted to solve various NLP tasks, and TextNAS also supports multi-path ensemble within a single network to balance the width and depth of the architecture. 
 
-# Official Microsoft Sample
+The search space of TextNAS contains: 
 
-<!-- 
-Guidelines on README format: https://review.docs.microsoft.com/help/onboard/admin/samples/concepts/readme-template?branch=master
+    * 1-D convolutional operator with filter size 1, 3, 5, 7 
+    * recurrent operator (bi-directional GRU) 
+    * self-attention operator
+    * pooling operator (max/average)
 
-Guidance on onboarding samples to docs.microsoft.com/samples: https://review.docs.microsoft.com/help/onboard/admin/samples/process/onboarding?branch=master
+Following the ENAS algorithm, TextNAS also utilizes parameter sharing to accelerate the search speed and adopts a reinforcement-learning controller for the architecture sampling and generation. Please refer to the paper for more details of TextNAS.
 
-Taxonomies for products and languages: https://review.docs.microsoft.com/new-hope/information-architecture/metadata/taxonomies?branch=master
--->
+## Preparation
 
-Give a short description for your sample here. What does it do and why is it important?
+Prepare the word vectors and SST dataset, and organize them in data directory as shown below:
 
-## Contents
+```
+textnas
+├── data
+│   ├── sst
+│   │   ├── dev.txt
+│   │   ├── test.txt
+│   │   └── train.txt
+│   └── glove.840B.300d.txt
+├── dataloader.py
+├── model.py
+├── ops.py
+├── README.md
+├── search.py
+└── utils.py
+```
 
-Outline the file contents of the repository. It helps users navigate the codebase, build configuration and any related assets.
+The following link might be helpful for finding and downloading the corresponding dataset:
 
-| File/folder       | Description                                |
-|-------------------|--------------------------------------------|
-| `src`             | Sample source code.                        |
-| `.gitignore`      | Define what to ignore at commit time.      |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `README.md`       | This README file.                          |
-| `LICENSE`         | The license for the sample.                |
+* [GloVe: Global Vectors for Word Representation](https://nlp.stanford.edu/projects/glove/)
+  * [glove.840B.300d.txt](http://nlp.stanford.edu/data/glove.840B.300d.zip)
+* [Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank](https://nlp.stanford.edu/sentiment/)
+  * [trainDevTestTrees_PTB.zip](https://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip)
 
-## Prerequisites
+## Examples
 
-Outline the required components and tools that a user might need to have on their machine in order to run the sample. This can be anything from frameworks, SDKs, OS versions or IDE releases.
+### Search Space
 
-## Setup
+```bash
+# If the code is cloned already, ignore this line and enter code folder.
+git clone https://github.com/microsoft/TextNAS.git
 
-Explain how to prepare the sample once the user clones or downloads the repository. The section should outline every step necessary to install dependencies and set up any settings (for example, API keys and output folders).
+# search the best architecture
+cd TextNAS
 
-## Running the sample
+# view more options for search
+sh sst_macro_search_multi.sh
+```
+### Evaluate the architecture
 
-Outline step-by-step instructions to execute the sample and see its output. Include steps for executing the sample from the IDE, starting specific services in the Azure portal or anything related to the overall launch of the code.
+```bash
+# If the code is cloned already, ignore this line and enter code folder.
+git clone https://github.com/microsoft/TextNAS.git
 
-## Key concepts
+# evaluate the architecture on sst-2
+sh eval_arc_sst2.sh
 
-Provide users with more context on the tools and services used in the sample. Explain some of the code that is being used and how services interact with each other.
+# evaluate the architecture on sst-5
+```
+sh eval_arc_sst5.sh
 
-## Contributing
+## Citations
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+If you happen to use our work, please consider citing our paper.
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+@article{wang2019textnas,
+  title={TextNAS: A Neural Architecture Search Space tailored for Text Representation},
+  author={Wang, Yujing and Yang, Yaming and Chen, Yiren and Bai, Jing and Zhang, Ce and Su, Guinan and Kou, Xiaoyu and Tong, Yunhai and Yang, Mao and Zhou, Lidong},
+  journal={arXiv preprint arXiv:1912.10729},
+  year={2019}
+}
